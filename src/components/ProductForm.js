@@ -6,17 +6,24 @@ const ProductForm = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
     axios
-      .post("https://suntek-ai-backend.onrender.com/products", { name, price, description })
+      .post("https://suntek-ai-backend.onrender.com/products", {
+        name,
+        price,
+        description,
+      })
       .then(() => {
         alert("Product added successfully");
         navigate("/");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false)); // Stop loading after request
   };
 
   return (
@@ -53,8 +60,15 @@ const ProductForm = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-success">
-          Add Product
+        <button type="submit" className="btn btn-success" disabled={loading}>
+          {loading ? (
+            <>
+              <span className="spinner-border spinner-border-sm"></span>{" "}
+              Adding...
+            </>
+          ) : (
+            "Add Product"
+          )}
         </button>
       </form>
     </div>
