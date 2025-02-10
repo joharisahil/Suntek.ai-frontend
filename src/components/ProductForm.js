@@ -6,12 +6,12 @@ const ProductForm = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
     axios
       .post("https://suntek-ai-backend.onrender.com/products", {
         name,
@@ -23,7 +23,7 @@ const ProductForm = () => {
         navigate("/");
       })
       .catch((err) => console.error(err))
-      .finally(() => setLoading(false)); // Stop loading after request
+      .finally(() => setLoading(false));
   };
 
   return (
